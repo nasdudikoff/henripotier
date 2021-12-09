@@ -1,0 +1,98 @@
+@import 'mixins';
+@import 'variables';
+
+@font-face {
+    font-family: "harryp";
+    src: url("/harry_p/HARRYP__.TTF");
+    font-style: normal;
+    font-weight: 400;
+    font-display: swap;
+}
+
+.header {
+    background-color: white;
+    color: $blackPrimary;
+    height: 50px;
+    box-shadow: 0 2px 18px 0 rgb(129 162 182 / 20%);
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr 2fr 1fr;
+    align-items: center;
+}
+
+.rechercherLivre {
+    border-radius: 5px;
+    box-shadow: none;
+    box-sizing: border-box;
+    display: block;
+    padding: 5px 10px;
+    font-size: 14px;
+    line-height: 26px;
+    outline: 0;
+    color: $blackPrimary;
+    background-color: transparent;
+    border: 1px solid $greyPrimary;
+    text-overflow: ellipsis;
+    appearance: none;
+}
+
+.rechercherLivre::placeholder {
+    text-align: center;
+}
+
+.panier {
+    text-align: center;
+
+    a {
+        cursor: pointer;
+    }
+}
+
+.title {
+    font-family: 'harryp';
+    font-size: 35px;
+    text-align: center;
+}
+
+.panierContainer {
+    position: fixed;
+    height: 100%;
+    margin-right: -100%;
+    width: 35%;
+    z-index: 10;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    background-color: white;
+    box-shadow: 0 .5rem 1rem rgba(0, 0, 0, .15);
+    transition: all ease 0.3s;
+
+    &[data-show="1"] {
+        margin-right: 0;
+    }
+}
+
+
+@include tablet {
+    .header {
+        grid-template-columns: 1fr;
+        height: auto;
+        padding-bottom: 20px;
+        justify-items: center;
+        grid-gap: 10px;
+    }
+
+    .rechercherLivre {
+        width: 90%;
+    }
+
+    .panierContainer {
+        width: 100%;
+    }
+}
+
+@include hd {
+    .title {
+        font-size: 25px;
+    }
+}
