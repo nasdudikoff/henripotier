@@ -45,8 +45,7 @@
                     display: grid;
                     grid-template-columns: 1fr 2fr;
 
-                    .uniteTitle
-                     {}
+                   
 
                     .uniteValue {
                         border: 1px solid $greyTertiary;
@@ -60,7 +59,6 @@
                     display: grid;
                     grid-template-columns: 1fr 2fr;
 
-                    .prixTitle {}
 
                     .prixValue {
                         display: flex;
@@ -101,6 +99,7 @@
 @include tablet {
     .bookContent {
         width: auto !important;
+        top: auto !important;
         .presentation {
             grid-gap: 30px;
             grid-template-columns: 1fr !important;

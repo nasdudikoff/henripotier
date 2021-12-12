@@ -33,7 +33,7 @@ export default function Main({ children }: { children: object }) {
             <Head>
                 <title>Henri Potier</title>
                 <meta name="description" content="La bibliothéque d'Henri Potier" />
-                <link rel="icon" href="/favicon.ico" />
+                <link rel="icon" href="/favicon.png" />
             </Head>
             <Header />
             {children}

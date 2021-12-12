@@ -40,7 +40,6 @@ export default function UnPanier({
         if (data.isbn) {
             dispatch(removeOneBookFromPanier(data.isbn))
         }
-
     }
 
     return (
@@ -65,7 +64,7 @@ export default function UnPanier({
                         </b>
                     </span>
                     <div className={styles.action}>
-                        <input onChange={e => addUnite(e)} className={styles.unite} type="number" value={data.unite} />
+                        <input onChange={e => addUnite(e)} className={styles.unite} type="number" min="0" value={data.unite} />
                         <button onClick={e=>deletePanier(e)} className={styles.supprimer}>
                             <FontAwesomeIcon icon={faTrash} />
                         </button>

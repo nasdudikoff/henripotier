@@ -9,19 +9,35 @@ const bookDimensions = {
     height: 400,
     width: 300
 }
+import Link from 'next/link';
+
+import {
+    useAppDispatch,
+    useAppSelector,
+} from '../redux/hooks';
+
+import {
+     setPanier
+} from '../redux/slices/bookSlice';
+
 
 import { book } from '../types'
-import Link from 'next/link';
 
 export default function BookRepresentation({ book }: {
     book: book
 }) {
 
+    const dispatch = useAppDispatch()
     const addToCart = (e: any) => {
         e.stopPropagation()
 
-
-
+        dispatch(setPanier({
+            isbn : book.isbn ,
+            unite : 1,
+            cover: book.cover,
+            price : book.price,
+            title : book.title
+        }))
     }
 
     return (

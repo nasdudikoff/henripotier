@@ -34,7 +34,7 @@ const Home: NextPage = () => {
         <div data-show={isGoTopShow?1:0} className={styles.goToTop} onClick={(e) => {
           goToTop(e)
         }}>
-          <FontAwesomeIcon icon={faQuidditch} width={25} height={25} />
+          <FontAwesomeIcon icon={faQuidditch} width={30} height={30} />
         </div>
       </main>
     </div>

@@ -10,7 +10,7 @@ import {
 
 import Image from 'next/image';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faDollarSign, faArrowRight } from '@fortawesome/free-solid-svg-icons';
+import { faDollarSign } from '@fortawesome/free-solid-svg-icons';
 
 import styles from '../../styles/Book.module.scss'
 
@@ -36,10 +36,6 @@ export default function Book() {
         }
     }, [])
 
-    console.log("router", router);
-    console.log("currentBook", currentBook);
-
-    
     const addToCart = (e: any) => {
 
         dispatch(setPanier({
@@ -71,7 +67,7 @@ export default function Book() {
                     <div className={styles.priceUnity}>
                         <div className={styles.unite}>
                             <label className={styles.uniteTitle}>Unité</label>
-                            <input onChange={e=>setUnite(Number(e.target.value))} type="number" value={unite} className={styles.uniteValue}/>
+                            <input onChange={e=>setUnite(Number(e.target.value))} type="number" min="1" value={unite} className={styles.uniteValue}/>
                         </div>
                         <div className={styles.prix}>
                             <label className={styles.prixTitle}>Prix</label>

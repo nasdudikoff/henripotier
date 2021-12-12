@@ -8,16 +8,35 @@ import UnPanier from './UnPanier'
 import { panier } from '../../types'
 import Image from 'next/image'
 
+import { useAppDispatch, useAppSelector } from '../../redux/hooks'
+import { calculOffreCommercial, selectOffreCommercial , setMontantFinal } from '../../redux/slices/bookSlice'
+import { useRouter } from 'next/router'
+
 const dimensionIcon = 20
 
 type panierList = { [key: string]: panier }
+
+function Money({ value, title }: { title: string, value: number }) {
+    return (
+        <>
+            <span>{title} : </span>
+            <FontAwesomeIcon icon={faDollarSign} width={20} height={20} />&nbsp;
+            <b>{value}</b>
+        </>
+    )
+}
 
 export default function Panier({ panierList, clickClosePanier }: {
     panierList: panierList,
     clickClosePanier: () => void
 }) {
 
+    const dispatch = useAppDispatch()
+    const router = useRouter()
+    const offreCommercial = useAppSelector(selectOffreCommercial)
+
     const [total, setTotal] = useState(0)
+    const [totalRemise, setTotalRemise] = useState(0)
 
     useEffect(() => {
         let total = 0
@@ -26,10 +45,23 @@ export default function Panier({ panierList, clickClosePanier }: {
             total += item.unite * item.price
         }
         setTotal(total)
+
+        /**
+         * Envoi des isbn selectionnés pour calcul de l'offre commercial
+         */
+        dispatch(calculOffreCommercial(total, Object.keys(panierList)))
+
     }, [panierList])
 
-    const validerAchat = (e:any) =>{
-        
+    useEffect(() => {
+        let totalRemise = total-offreCommercial
+        setTotalRemise(totalRemise)
+        dispatch(setMontantFinal(totalRemise))
+
+    }, [offreCommercial,total])
+
+    const validerAchat = (e: any) => {
+        router.push('/paiement')
     }
 
     return (
@@ -61,13 +93,19 @@ export default function Panier({ panierList, clickClosePanier }: {
                 </ul>
             </div>
             <div className={styles.panierBottom}>
-                <div>
-                    <span>Total : </span>
-                    <FontAwesomeIcon icon={faDollarSign} width={20} height={20} />&nbsp;
-                    <b>{total}</b>
+                <div className={styles.totalOffreCommercial}>
+                    <div>
+                        <Money title="Sous-total" value={total} />
+                    </div>
+                    <div>
+                        <Money title="Réduction" value={offreCommercial} />
+                    </div>
+                    <div>
+                        <Money title="Total" value={totalRemise} />
+                    </div>
                 </div>
-                <button onClick={(e)=>validerAchat(e)} className={styles.valider}>
-                    VALIDER ACHAT
+                <button onClick={(e) => validerAchat(e)} className={styles.valider}>
+                    VALIDER L{"'"}ACHAT
                 </button>
             </div>
         </>
