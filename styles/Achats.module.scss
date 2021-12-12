@@ -9,91 +9,6 @@
     flex-wrap: wrap;
 }
 
-.bookCard {
-    flex-direction: column;
-    align-items: center;
-    width: 50%;
-    text-align: center;
-    padding: 20px 10px;
-
-    .bookTitle {
-        font-size: 22px;
-        font-weight: 700;
-        color: $cyan;
-    }
-
-    .swapPositionOddEven {
-        .synopsis {
-            color: #6d6d6d;
-        }
-    }
-
-    &:nth-child(odd) {
-        margin-bottom: $oddEvenMargin;
-    }
-
-    &:nth-child(even) {
-        margin-top: $oddEvenMargin;
-    }
-
-    &:hover {
-        cursor: pointer;
-        background-color: rgb(245, 245, 245);
-        .buy {
-            visibility: visible;
-        }
-    }
-}
-
-.bookAction {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    width: 100%;
-
-    .buy {
-        visibility: hidden;
-
-        .btnAjouterAuPanier {
-            border: 1px solid;
-            color: $cyan;
-            border-color: $cyan;
-            padding: 7px 10px;
-            background-color: white;
-            cursor: pointer;
-            border-width: 1px;
-            font-weight: 500;
-            box-shadow: 0 10px 20px -6px rgba(0, 0, 0, .12);
-            overflow: hidden;
-            position: relative;
-            transition: background-color .3s ease;
-
-            &:hover,
-            &:focus {
-                color: #fff;
-                background: $cyan;
-            }
-        }
-    }
-
-    .price {
-        display: flex;
-        align-content: center;
-        color: rgb(146, 146, 146);
-        font-size: 20px;
-        .iconPrice {
-            font-weight: normal;
-        }
-        .priceUnit {
-
-        }
-    }
-}
-
-
-.ajoutPanier {
-    color: $cyan;
-}
 
 @include tablet {
     .achatsContainer {
@@ -104,27 +19,5 @@
         grid-gap: 5px;
     }
 
-    .bookCard {
-        width: 100%;
-
-        &:nth-child(odd) {
-            margin: 0;
-        }
-
-        &:nth-child(even) {
-            margin: 0;
-        }
-
-        .swapPositionOddEven {
-            .synopsis {
-                display: none;
-            }
-        }
-    }
-
-    .bookAction {
-        .buy {
-            visibility: visible;
-        }
-    }
+  
 }

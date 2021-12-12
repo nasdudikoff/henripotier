@@ -5,22 +5,28 @@ import {
 } from '@reduxjs/toolkit';
 import type { RootState } from '../store';
 import axios from 'axios'
+import lodash from 'lodash'
 
-import { panier } from '../../types'
+import { book, panier } from '../../types'
 // declaring the types for our state
-export type CounterState = {
-    books: Array<panier>;
-    searchBookText : string;
-    panier : Array<panier|any>
+
+export type BookState = {
+    books: Array<book>;
+    searchBookText: string;
+    panierList: {
+        [key: string]: panier
+    };
+    currentBook: any;
 };
 
-const initialState: CounterState = {
+const initialState: BookState = {
     books: [],
     searchBookText: "",
-    panier : []
+    panierList: {},
+    currentBook: null
 };
 
-const urlGetAllBooks = `https://henri-potier.techx.fr/books`
+const urlGetAllBooks = `http://localhost:3000/api/books`
 
 export const bookSlice = createSlice({
     name: 'book',
@@ -32,30 +38,69 @@ export const bookSlice = createSlice({
         setSearchBookText: (state, action: PayloadAction<string>) => {
             state.searchBookText = action.payload
         },
-        setBooks: (state, action: PayloadAction<Array<panier>>) => {
+        setBooks: (state, action: PayloadAction<Array<book>>) => {
             state.books = action.payload
         },
-        setPanier: (state, action: PayloadAction<Array<panier|any>>) => {
-            state.panier = action.payload
+        setPanier: (state, action: PayloadAction<panier>) => {
+            var isBookInPanier = state.panierList.hasOwnProperty(action.payload.isbn)
+            if (isBookInPanier) {
+                var newPanier = { ...state.panierList }
+                newPanier[action.payload.isbn]["unite"] += action.payload.unite
+                state.panierList = newPanier
+            } else {
+                var newPanier = { ...state.panierList }
+                newPanier[action.payload.isbn] = {
+                    ...action.payload
+                }
+                state.panierList = newPanier
+            }
+        },
+        updatePanierProperties: (state, action ) => {
+            var newPanier = {...state.panierList}
+            if (newPanier.hasOwnProperty(action.payload.isbn)) {
+                newPanier[action.payload.isbn] = {
+                    ...newPanier[action.payload.isbn],
+                    ...action.payload
+                }
+                state.panierList = newPanier
+            }
+        },
+        removeOneBookFromPanier :(state, action ) => {
+            var newPanier = {...state.panierList}
+            if (newPanier.hasOwnProperty(action.payload)) {
+                delete newPanier[action.payload] 
+                state.panierList = newPanier
+            }
+        },
+        setCurrentBook: (state, action: PayloadAction<string>) => {
+
+            if (!action.payload) {
+                state.currentBook = null
+            } else {
+                const currentBook_ = state.books.find(item => item.isbn == action.payload)
+                state.currentBook = { ...currentBook_ }
+            }
         }
     },
 });
 // Here we are just exporting the actions from this slice, so that we can call them anywhere in our app.
 export const {
-    setBooks , setSearchBookText , setPanier
+    setBooks, setSearchBookText, setPanier, setCurrentBook , updatePanierProperties , removeOneBookFromPanier
 } = bookSlice.actions;
 
 // calling the above actions would be useless if we could not access the data in the state. So, we use something called a selector which allows us to select a value from the state.
 export const selectBooks = (state: RootState) => state.book.books;
+export const selectBook = (state: RootState) => state.book.currentBook;
 export const selectSearchBookText = (state: RootState) => state.book.searchBookText;
-export const selectPanier = (state: RootState) => state.book.panier;
+export const selectPanier = (state: RootState) => state.book.panierList;
 
-export const searchBook = (value:string )=> (dispatch:Dispatch) => {
+export const searchBook = (value: string) => (dispatch: Dispatch) => {
     dispatch(setSearchBookText(value))
 }
 
-export const loadBooks = () => async (dispatch:Dispatch) => {
+export const loadBooks = () => async (dispatch: Dispatch) => {
     const { data } = await axios.get(urlGetAllBooks)
+
     console.log("LOADED BOOKS", data);
     dispatch(setBooks(data))
 }

@@ -1,0 +1,15 @@
+@import 'mixins';
+@import 'variables';
+
+.goToTop {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    color: $cyan;
+    cursor: pointer;
+    visibility: hidden;
+
+    &[data-show="1"] {
+        visibility: visible;
+    }
+}

@@ -1,37 +1,41 @@
 import type { NextPage } from 'next'
-import Head from 'next/head'
 import styles from '../styles/Home.module.scss'
-import { useState, useEffect } from 'react'
 import Achats from '../components/Achats'
-
-import {
-  useAppDispatch,
-  useAppSelector,
-} from '../redux/hooks';
-
-import {
-  selectBooks, loadBooks
-} from '../redux/slices/bookSlice';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faQuidditch } from '@fortawesome/free-solid-svg-icons'
+import { useState, useEffect } from 'react'
+import { useRouter } from 'next/router'
 
 const Home: NextPage = () => {
-  const dispatch = useAppDispatch();
-  const books = useAppSelector(selectBooks)
-  const [mode, setMode] = useState("white")
 
+  const [isGoTopShow, setIsGoTopShow] = useState(false)
+  
   useEffect(() => {
-    dispatch(loadBooks())
+    
+    window.addEventListener('scroll',(e:any)=>{
+
+      if (window.scrollY >= 350) {
+        setIsGoTopShow(true)
+      } else {
+        setIsGoTopShow(false)
+      }
+
+    })
   }, [])
+
+  const goToTop = (e: any) => {
+    window.scrollTo(0, 0)
+  }
 
   return (
     <div className={styles.container}>
-      <Head>
-        <title>Henri Potier</title>
-        <meta name="description" content="La bibliothéque d'Henri Potier" />
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
-
       <main>
-        <Achats books={books} />
+        <Achats />
+        <div data-show={isGoTopShow?1:0} className={styles.goToTop} onClick={(e) => {
+          goToTop(e)
+        }}>
+          <FontAwesomeIcon icon={faQuidditch} width={25} height={25} />
+        </div>
       </main>
     </div>
   )

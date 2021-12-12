@@ -1,0 +1,117 @@
+@import 'mixins';
+@import 'variables';
+
+.bookContent {
+
+    display: flex;
+    flex-direction: column;
+    grid-gap: 10px;
+    width: 70%;
+    margin: auto;
+    top: 50px;
+    position: absolute;
+    padding: 20px;
+    left: 0;
+    right: 0;
+
+    .title {
+        font-weight: 700;
+        text-decoration: underline;
+        color: $cyan;
+        text-align: center;
+    }
+
+    .presentation {
+        grid-template-columns: 1fr 1fr;
+        display: grid;
+
+        .leftPresentation {
+            display: flex;
+            justify-content: center;
+        }
+
+        .rightPresentation {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            grid-gap: 30px;
+
+            .priceUnity {
+                display: flex;
+                flex-direction: column;
+                grid-gap: 30px;
+
+                .unite {
+                    display: grid;
+                    grid-template-columns: 1fr 2fr;
+
+                    .uniteTitle
+                     {}
+
+                    .uniteValue {
+                        border: 1px solid $greyTertiary;
+                        padding: 10px 10px;
+                        background-color: white;
+                        border-radius: 5px;
+                    }
+                }
+
+                .prix {
+                    display: grid;
+                    grid-template-columns: 1fr 2fr;
+
+                    .prixTitle {}
+
+                    .prixValue {
+                        display: flex;
+                        align-items: center;
+                        color: $greySecondary;
+                    }
+                }
+            }
+
+            .ajouterAuPanier {
+                border: none;
+                background-color: $bluePrimary;
+                padding: 15px;
+                color: white;
+                cursor: pointer;
+                text-transform: uppercase;
+                font-weight: 700;
+            }
+        }
+    }
+
+    .synopsis {
+        .synopsisTitle {
+            font-size: 14px;
+            color: $blackPrimary;
+            text-transform: uppercase;
+            font-style: oblique;
+        }
+
+        .synopsisContent {
+            font-size: 12px;
+            font-family: 'opensans';
+            color: $greySecondary;
+        }
+    }
+}
+
+@include tablet {
+    .bookContent {
+        width: auto !important;
+        .presentation {
+            grid-gap: 30px;
+            grid-template-columns: 1fr !important;
+
+            .rightPresentation {
+                grid-gap: 20px !important;
+                .priceUnity {
+                    grid-gap: 20px !important;
+                    grid-template-columns: 1fr !important;
+                }
+            }
+        }
+    }
+}

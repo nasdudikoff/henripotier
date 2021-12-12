@@ -1,10 +1,41 @@
-.panierHeader{
+@import 'variables';
+
+
+.panierHeader {
+    width: 100%;
     display: flex;
     justify-content: space-between;
+    align-items: center;
     padding: 10px;
+
+    .titlePanier {
+        font-weight: 400;
+        display: flex;
+        align-items: center;
+    }
 }
-.panierContent{
+.panierContainer {
+    overflow: auto;
+}
+.panierContent {
     padding: 10px;
     list-style: none;
     margin: 0;
+}
+
+.panierBottom {
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    grid-gap: 10px;
+    .valider{
+        border: none;
+        background-color: $cyan;
+        padding: 10px;
+        color: white;
+        cursor: pointer;
+        text-transform: uppercase;
+        font-weight: 700;
+    }
+
 }

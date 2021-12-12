@@ -1,3 +1,6 @@
+@import 'mixins';
+@import 'variables';
+
 html,
 body {
   padding: 0;
@@ -15,4 +18,30 @@ a {
 }
 main {
   text-align: center;
+  position: absolute;
+  top: 50px;
+}
+
+
+@font-face {
+  font-family: "harryp";
+  src: url("/harry_p/HARRYP__.TTF");
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "opensans";
+  src: url("/opensans.ttf");
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+}
+
+@include tablet {
+  main {
+    position: relative;
+    top: unset;
+  }
 }
