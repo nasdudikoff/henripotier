@@ -2,7 +2,8 @@
 - [Table de matières](#table-de-matières)
 - [Introduction](#introduction)
 - [Installation](#installation)
-
+- [Tests unitaires](#tests-unitaires)
+- [Tests end2end](#tests-end2end)
 
 # Introduction
  Application e-commerce de vente de livre fait avec NextJs, basé sur ReactJS et
@@ -23,3 +24,10 @@
     4. (Optionnel) Executer la commande ```npm run build``` pour préparer le projet en mode production
     5. (Optionnel) Executer la commande ```npm run start``` pour lancer le projet en mode production.
     6. Aller sur ce [lien](http://localhost:3000)
+
+# Tests unitaires
+ - Executer la commande ```npm run test``` pour executer les tests unitaires disponible sur le projet
+
+# Tests end2end
+ - Pour faire le test end2end , il faut exectuer l'action N°4 puis N°5 dans l'installation.
+ - Executer la commande ```npm run cypress``` pour executer les tests e2e disponible sur le projetp

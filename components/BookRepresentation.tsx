@@ -13,7 +13,6 @@ import Link from 'next/link';
 
 import {
     useAppDispatch,
-    useAppSelector,
 } from '../redux/hooks';
 
 import {
@@ -42,7 +41,7 @@ export default function BookRepresentation({ book }: {
 
     return (
         <Link href={`/book/${book.isbn}`} passHref>
-            <div className={styles.bookCard}>
+            <div className={styles.bookCard} data-class="bookCard">
                 <label className={styles.bookTitle}>
                     {book.title}
                 </label>
@@ -68,7 +67,7 @@ export default function BookRepresentation({ book }: {
                         </b>
                     </div>
                     <div className={styles.buy}>
-                        <button onClick={(e) => addToCart(e)} className={styles.btnAjouterAuPanier}>
+                        <button name="ajouterAuPanier" data-id={book.isbn} onClick={(e) => addToCart(e)} className={styles.btnAjouterAuPanier}>
                             <FontAwesomeIcon icon={faArrowRight} width={10} height={10} />{' '}
                             <span>
                                 Ajouter au  panier

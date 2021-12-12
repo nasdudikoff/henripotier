@@ -73,14 +73,16 @@ export default function Header() {
 				</Link>
 			</span>
 
-			<input data-show={isSearchAvailable ? 1 : 0} type="text" onKeyUp={(e) => keyupSearchBooks(e)} placeholder="Rechercher" className={styles.rechercherLivre} />
+			<input name="searchBooks" data-show={isSearchAvailable ? 1 : 0} type="text" onKeyUp={(e) => keyupSearchBooks(e)} placeholder="Rechercher" className={styles.rechercherLivre} />
 
 			<div className={styles.panier}>
-				<a onClick={() => clickShowCart()} >
+				<a data-id="showCart" onClick={() => clickShowCart()} >
 					<FontAwesomeIcon height={dimensionIcon} width={dimensionIcon} icon={faShoppingCart} />
-					{
-						Object.keys(panierList).length
-					}
+					<label data-class="nombreLivreDansPanier">
+						{
+							Object.keys(panierList).length
+						}
+					</label>
 				</a>
 			</div>
 

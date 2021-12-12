@@ -1,5 +1,5 @@
 import React from 'react'
-import { useState, useEffect } from 'react'
+import {  useEffect } from 'react'
 import {
     useAppDispatch,
     useAppSelector,
@@ -32,7 +32,7 @@ export default function Main({ children }: { children: any }) {
             <Head>
                 <title>Henri Potier</title>
                 <meta name="description" content="La bibliothéque d'Henri Potier" />
-                <link rel="icon" href="/favicon.png" />
+                <link rel="icon" href="/favicon.ico" />
             </Head>
             <Header />
             {children}

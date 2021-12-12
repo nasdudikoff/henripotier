@@ -12,3 +12,8 @@ export type panier = {
     price: number;
     cover: string;
 }
+export type offer = {
+    type: string;
+    value:number;
+    sliceValue?:number|any
+}

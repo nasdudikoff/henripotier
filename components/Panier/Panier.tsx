@@ -9,19 +9,19 @@ import { panier } from '../../types'
 import Image from 'next/image'
 
 import { useAppDispatch, useAppSelector } from '../../redux/hooks'
-import { calculOffreCommercial, selectOffreCommercial , setMontantFinal } from '../../redux/slices/bookSlice'
+import { calculOffreCommercial, selectOffreCommercial , setMontantFinal  } from '../../redux/slices/bookSlice'
 import { useRouter } from 'next/router'
 
 const dimensionIcon = 20
 
 type panierList = { [key: string]: panier }
 
-function Money({ value, title }: { title: string, value: number }) {
+function Money({ value, title ,id }: {id: string, title: string, value: number }) {
     return (
         <>
             <span>{title} : </span>
             <FontAwesomeIcon icon={faDollarSign} width={20} height={20} />&nbsp;
-            <b>{value}</b>
+            <b data-id={id}>{value}</b>
         </>
     )
 }
@@ -58,12 +58,18 @@ export default function Panier({ panierList, clickClosePanier }: {
         let totalRemise = total-offreCommercial
         setTotalRemise(totalRemise)
         dispatch(setMontantFinal(totalRemise))
-
+        
     }, [offreCommercial,total])
 
     const validerAchat = (e: any) => {
-        router.push('/paiement')
-    }
+
+        if (total > 0) {
+            clickClosePanier()
+            router.push('/paiement')
+        } else {
+            alert('Le montant total est de 0. Pas de paiement à faire')
+        }
+    } 
 
     return (
         <>
@@ -96,13 +102,13 @@ export default function Panier({ panierList, clickClosePanier }: {
             <div className={styles.panierBottom}>
                 <div className={styles.totalOffreCommercial}>
                     <div>
-                        <Money title="Sous-total" value={total} />
+                        <Money title="Sous-total" id="sous-total" value={total} />
                     </div>
                     <div>
-                        <Money title="Réduction" value={offreCommercial} />
+                        <Money title="Réduction"  id="reduction" value={offreCommercial} />
                     </div>
                     <div>
-                        <Money title="Total" value={totalRemise} />
+                        <Money title="Total"  id="total" value={totalRemise} />
                     </div>
                 </div>
                 <button onClick={(e) => validerAchat(e)} className={styles.valider}>

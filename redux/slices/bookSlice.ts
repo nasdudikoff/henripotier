@@ -7,7 +7,7 @@ import type { RootState } from '../store';
 import axios from 'axios'
 import lodash from 'lodash'
 
-import { book, panier } from '../../types'
+import { book, panier, offer } from '../../types'
 // declaring the types for our state
 
 export type BookState = {
@@ -18,7 +18,7 @@ export type BookState = {
     };
     currentBook: any;
     offreCommercial: number;
-    montantFinal: 0
+    montantFinal: number,
 };
 
 const initialState: BookState = {
@@ -27,10 +27,8 @@ const initialState: BookState = {
     panierList: {},
     currentBook: null,
     offreCommercial: 0,
-    montantFinal: 0
+    montantFinal: 0,
 };
-
-const urlGetAllBooks = `http://localhost:3000/api/books`
 
 export const bookSlice = createSlice({
     name: 'book',
@@ -87,7 +85,7 @@ export const bookSlice = createSlice({
                 const currentBook_ = state.books.find(item => item.isbn == action.payload)
                 state.currentBook = { ...currentBook_ }
             }
-        }
+        },
     },
 });
 // Here we are just exporting the actions from this slice, so that we can call them anywhere in our app.
@@ -108,39 +106,50 @@ export const searchBook = (value: string) => (dispatch: Dispatch) => {
 }
 
 export const loadBooks = () => async (dispatch: Dispatch) => {
+    const urlGetAllBooks = `/api/books`
     const { data } = await axios.get(urlGetAllBooks)
     console.log("LOADED BOOKS", data);
     dispatch(setBooks(data))
+}
+
+export const calculRemise = (total: number, offers: Array<offer>) => {
+
+    const reductionsSurLesOffres = []
+
+    for (let index = 0; index < offers.length; index++) {
+        const element = offers[index];
+        const value = element.value
+        const type = element.type
+        if (type == "percentage") {
+            reductionsSurLesOffres.push(total * value / 100)
+        }
+        if (type == "minus") {
+            reductionsSurLesOffres.push(value)
+        }
+        if (type == "slice") {
+            reductionsSurLesOffres.push(Math.floor(total / element.sliceValue) * value)
+        }
+    }
+    if (reductionsSurLesOffres.length > 0) {
+        const totalRemise: number = lodash.max(reductionsSurLesOffres) ?? 0
+        return totalRemise
+    }
+    return 0
+
 }
 
 export const calculOffreCommercial = (total: number, isbn: Array<string>) => async (dispatch: Dispatch) => {
 
     if (isbn && isbn.length > 0 && total > 0) {
 
-        const urlOffreCommercial = `https://henri-potier.techx.fr/books/${isbn.join(",")}/commercialOffers`
-        const { data } = await axios.get(urlOffreCommercial)
+        const urlOffreCommercial = `/api/promotion`
+        const { data } = await axios.post(urlOffreCommercial, {
+            isbn
+        })
         const offers = data.offers;
 
-        const reductionsSurLesOffres = []
-
-        for (let index = 0; index < offers.length; index++) {
-            const element = offers[index];
-            const value = element.value
-            const type = element.type
-            if (type == "percentage") {
-                reductionsSurLesOffres.push(total * value / 100)
-            }
-            if (type == "minus") {
-                reductionsSurLesOffres.push(value)
-            }
-            if (type == "slice") {
-                reductionsSurLesOffres.push(Math.floor(total / element.sliceValue) * value)
-            }
-        }
-        if (reductionsSurLesOffres.length > 0) {
-            const totalRemise: number = lodash.max(reductionsSurLesOffres)
-            dispatch(setOffreCommercial(totalRemise))
-        }
+        const totalRemise = calculRemise(total,offers )
+        dispatch(setOffreCommercial(totalRemise))
     } else {
         dispatch(setOffreCommercial(0))
     }
