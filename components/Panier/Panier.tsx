@@ -39,6 +39,7 @@ export default function Panier({ panierList, clickClosePanier }: {
     const [totalRemise, setTotalRemise] = useState(0)
 
     useEffect(() => {
+
         let total = 0
         for (let index = 0; index < Object.values(panierList).length; index++) {
             const item = Object.values(panierList)[index];

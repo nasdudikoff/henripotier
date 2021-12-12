@@ -1,7 +1,7 @@
 import React from 'react'
 
 import {
-    useAppSelector, useAppDispatch
+    useAppSelector, 
 } from '../redux/hooks';
 import {
     selectMontantFinal
@@ -9,8 +9,8 @@ import {
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faDollarSign } from '@fortawesome/free-solid-svg-icons';
 
-export default function paiement() {
-
+export default function Paiement()  {
+ 
     const total = useAppSelector(selectMontantFinal)
 
     return (

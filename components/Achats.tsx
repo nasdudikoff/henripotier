@@ -34,7 +34,7 @@ export default function Achats() {
                 setMatch(true)
             }
         }
-    }, [searchText])
+    }, [searchText, books])
 
     return (
 

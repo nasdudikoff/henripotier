@@ -34,7 +34,7 @@ export default function Book() {
         return () => {
             dispatch(setCurrentBook(""))
         }
-    }, [])
+    }, [isbn])
 
     const addToCart = (e: any) => {
 

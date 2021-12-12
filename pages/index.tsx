@@ -4,7 +4,6 @@ import Achats from '../components/Achats'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faQuidditch } from '@fortawesome/free-solid-svg-icons'
 import { useState, useEffect } from 'react'
-import { useRouter } from 'next/router'
 
 const Home: NextPage = () => {
 

@@ -14,9 +14,8 @@ import styles from '../styles/Main.module.scss'
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSpinner } from '@fortawesome/free-solid-svg-icons';
-import { useRouter } from 'next/router';
 
-export default function Main({ children }: { children: object }) {
+export default function Main({ children }: { children: any }) {
 
     const dispatch = useAppDispatch();
     const books = useAppSelector(selectBooks)
@@ -29,7 +28,7 @@ export default function Main({ children }: { children: object }) {
         <div className={styles.loader}>
             <FontAwesomeIcon icon={faSpinner} spin />
         </div> :
-     <div>
+        <div>
             <Head>
                 <title>Henri Potier</title>
                 <meta name="description" content="La bibliothéque d'Henri Potier" />

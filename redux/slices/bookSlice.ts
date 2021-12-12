@@ -18,7 +18,7 @@ export type BookState = {
     };
     currentBook: any;
     offreCommercial: number;
-    montantFinal : 0
+    montantFinal: 0
 };
 
 const initialState: BookState = {
@@ -45,7 +45,7 @@ export const bookSlice = createSlice({
         setOffreCommercial: (state, action) => {
             state.offreCommercial = action.payload
         },
-        setMontantFinal :  (state, action) => {
+        setMontantFinal: (state, action) => {
             state.montantFinal = action.payload
         },
         setPanier: (state, action: PayloadAction<panier>) => {
@@ -92,7 +92,7 @@ export const bookSlice = createSlice({
 });
 // Here we are just exporting the actions from this slice, so that we can call them anywhere in our app.
 export const {
-    setBooks, setSearchBookText, setPanier, setCurrentBook, updatePanierProperties, removeOneBookFromPanier, setOffreCommercial , setMontantFinal
+    setBooks, setSearchBookText, setPanier, setCurrentBook, updatePanierProperties, removeOneBookFromPanier, setOffreCommercial, setMontantFinal
 } = bookSlice.actions;
 
 // calling the above actions would be useless if we could not access the data in the state. So, we use something called a selector which allows us to select a value from the state.
@@ -115,7 +115,8 @@ export const loadBooks = () => async (dispatch: Dispatch) => {
 
 export const calculOffreCommercial = (total: number, isbn: Array<string>) => async (dispatch: Dispatch) => {
 
-    if (isbn && isbn.length > 0) {
+    if (isbn && isbn.length > 0 && total > 0) {
+
         const urlOffreCommercial = `https://henri-potier.techx.fr/books/${isbn.join(",")}/commercialOffers`
         const { data } = await axios.get(urlOffreCommercial)
         const offers = data.offers;
@@ -136,11 +137,12 @@ export const calculOffreCommercial = (total: number, isbn: Array<string>) => asy
                 reductionsSurLesOffres.push(Math.floor(total / element.sliceValue) * value)
             }
         }
-
         if (reductionsSurLesOffres.length > 0) {
             const totalRemise: number = lodash.max(reductionsSurLesOffres)
             dispatch(setOffreCommercial(totalRemise))
         }
+    } else {
+        dispatch(setOffreCommercial(0))
     }
 }
 

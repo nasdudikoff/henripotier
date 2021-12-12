@@ -23,12 +23,6 @@ export default function Header() {
 
 	const panierList = useAppSelector(selectPanier)
 
-	useEffect(() => {
-		console.log("ny panerlist" , panierList);
-		
-		
-	}, [panierList])
-
 	const router = useRouter()
 	const [isPanierShow, setIsPanierShow] = useState(false)
 	const [isSearchAvailable, setIsSearchAvailable] = useState(true)
